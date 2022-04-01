@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script type="module">
+            import * as THREE from 'https://cdn.skypack.dev/three@0.139.2';
+
+            // 创建场景
+			const scene = new THREE.Scene();
+            // 创建相机， 第一个参数，视野角度；第二个参数，长宽比；第三个参数近截面，第四个参数远截面；
+            const camera = new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);
+            // 创建渲染器
+            const renderer = new THREE.WebGLRenderer();
+            // 设置渲染器
+            renderer.setSize(window.innerWidth,window.innerHeight,true);
+            // 添加渲染器到页面
+            document.body.appendChild(renderer.domElement);
+
+            // 创建立方体
+            const geometry = new THREE.BoxGeometry();
+            // 创建材质
+            const material = new THREE.MeshBasicMaterial({color:0x00ff00});
+            // 创建网格，承载立方体与材质
+            const cube = new THREE.Mesh(geometry,material);
+            // 添加网格到场景中
+            scene.add(cube);
+            // 摄像机z轴调整，方便观察
+            camera.position.z = 2.5;
+
+            // 动画函数
+            function animate(){
+                // 屏幕刷新时，执行动画函数
+                requestAnimationFrame(animate);
+                // 渲染器 添加场景和相机
+                renderer.render(scene,camera);
+                // 网格旋转
+                cube.rotation.x +=0.01;
+                cube.rotation.y +=0.01;
+            }
+            animate();
+		</script>
+	</body>
+</html>
